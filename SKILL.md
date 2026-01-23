@@ -40,16 +40,23 @@ Generate a high-vibe registration form using Shadcn UI components. Refer to `exa
 
 ## 3. Configuration Wizard
 
-### 3.1. Resend Setup
-1. Create account at [resend.com](https://resend.com).
-2. Generate API Key with `Send emails` permission.
-3. Add `RESEND_API_KEY` to `.env`.
-
+### 3.1. Supabase Database Setup
+1. Go to [Supabase Dashboard](https://supabase.com/dashboard).
+2. Navigate to **Project Settings** > **Database**.
+3. Copy the **Connection String** (URI). Use the `Transaction` mode (port 6543) for serverless environments.
+4. Add to `.env`: `DATABASE_URL="postgres://postgres:[YOUR-PASSWORD]@db.[YOUR-REF].supabase.co:6543/postgres"`.
+5. **Pro Tip**: If using the Supabase MCP, the Agent can verify table creation using `npx drizzle-kit push`.
+   
 ### 3.2. Google OAuth Setup
 1. Go to [Google Cloud Console](https://console.cloud.google.com).
 2. Create OAuth Client ID (Web Application).
 3. Set Redirect URI: `http://localhost:3000/api/auth/callback/google`.
 4. Add `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` to `.env`.
+
+### 3.3. Resend Setup
+1. Create account at [resend.com](https://resend.com).
+2. Generate API Key with `Send emails` permission.
+3. Add `RESEND_API_KEY` to `.env`.
 
 ## 4. References (Claude & Antigravity Compatible)
 

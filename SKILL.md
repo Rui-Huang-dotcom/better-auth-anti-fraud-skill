@@ -1,6 +1,6 @@
 ---
 name: better-auth-anti-fraud
-description: A high-performance Agent Skill to inject a secure, anti-fraud authentication layer into any Next.js/React project. It automates the setup of Better Auth, Drizzle ORM, Resend (with email verification & password reset), and Device Fingerprinting.
+description: A high-performance Agent Skill to inject a secure, anti-fraud authentication layer into any Next.js/React project. It automates the setup of Better Auth, Drizzle ORM, Resend (with email verification & password reset), and Threshold-based Device Fingerprinting.
 ---
 
 # Better Auth Anti-Fraud Skill: The Ultimate Auth Wizard
@@ -21,7 +21,7 @@ This skill transforms a basic authentication setup into a professional-grade, an
 3. **Env Vars**: `DATABASE_URL`, `BETTER_AUTH_SECRET`, `RESEND_API_KEY`, `AUTH_EMAIL_FROM`.
 
 ### Step 2.2: Schema & Plugin Setup
-1. **Schema**: Update `user` table using `resources/schema-snippet.ts`.
+1. **Schema**: Update `user` table using `resources/schema-snippet.ts`. (Note: Fingerprint is NOT unique to allow for threshold-based blocking).
 2. **Plugin**: Create `src/auth/plugins/anti-fraud.ts` using `resources/plugin-logic.ts`.
 
 ### Step 2.3: Better Auth Configuration (Email & Security)
@@ -30,7 +30,7 @@ This skill transforms a basic authentication setup into a professional-grade, an
    - Enable `emailVerification` and `passwordReset`.
    - Set `minPasswordLength: 8` for security.
    - Use the imported templates in `sendVerificationEmail` and `sendResetPassword`.
-   - Add `antiFraudPlugin` to the `plugins` array.
+   - Add `antiFraudPlugin({ threshold: 3 })` to the `plugins` array.
 
 ### Step 2.4: UI Components (Directory Structure)
 The Agent should create the following directory structure under `app/auth/`:
@@ -45,8 +45,8 @@ The Agent should create the following directory structure under `app/auth/`:
 - **Development**: Use `onboarding@resend.dev` as the `AUTH_EMAIL_FROM`.
 - **Production**: Verify your domain at [Resend Domains](https://resend.com/domains) and set `AUTH_EMAIL_FROM="support@yourdomain.com"`.
 
-### 3.2. Google OAuth & Supabase
-(Follow standard steps in Google Cloud Console and Supabase Dashboard).
+### 3.2. Anti-Fraud Philosophy (Threshold Strategy)
+In a real-world scenario, a single fingerprint might be shared (e.g., library computers, families). This skill uses a **Threshold Strategy** (default: 3 accounts per device). This prevents mass bot registration while minimizing false positives for legitimate users.
 
 ## 4. References
 

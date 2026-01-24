@@ -1,0 +1,16 @@
+{
+  "name": "better-auth-anti-fraud",
+  "version": "1.0.0",
+  "description": "Antigravity Agent Skill for secure, anti-fraud authentication using Better Auth and Device Fingerprinting.",
+  "main": "SKILL.md",
+  "author": "Manus AI",
+  "license": "MIT",
+  "keywords": [
+    "antigravity",
+    "agent-skill",
+    "better-auth",
+    "anti-fraud",
+    "drizzle",
+    "fingerprinting"
+  ]
+}

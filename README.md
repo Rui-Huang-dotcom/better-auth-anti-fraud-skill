@@ -20,7 +20,7 @@ This Skill implements a custom **Better Auth Server Plugin** that uses **Device 
 #### 1. Clone the Repository
 Clone this repository to your local machine:
 ```bash
-git clone https://github.com/your-username/better-auth-anti-fraud.git
+git clone https://github.com/rui-huang/better-auth-anti-fraud.git
 ```
 
 #### 2. Add to Your Project

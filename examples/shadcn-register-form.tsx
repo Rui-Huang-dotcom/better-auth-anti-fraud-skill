@@ -64,6 +64,22 @@ export function RegisterForm() {
         <CardTitle>Create an Account</CardTitle>
         <CardDescription>Enter your details to get started with Vibe Auth.</CardDescription>
       </CardHeader>
+      <CardContent>
+        <Button variant="outline" className="w-full" onClick={() => window.location.href = '/api/auth/google'}>
+          <svg className="mr-2 h-4 w-4" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512"><path fill="currentColor" d="M488 261.8C488 403.3 381.5 512 244 512 110.3 512 0 401.7 0 265.2 0 128.7 110.3 18.2 244 18.2c71.2 0 131.3 28.3 176.2 71.3l-66.3 64.2c-26.3-24.6-60.3-39.6-99.9-39.6-83.2 0-151.3 68.1-151.3 151.3s68.1 151.3 151.3 151.3c96.1 0 130.3-70.1 134.9-106.3H244v-85.3h236.1c2.3 12.7 3.9 26.1 3.9 40.2z"></path></svg>
+          Continue with Google
+        </Button>
+        <div className="relative py-4">
+          <div className="absolute inset-0 flex items-center">
+            <span className="w-full border-t" />
+          </div>
+          <div className="relative flex justify-center text-xs uppercase">
+            <span className="bg-card px-2 text-muted-foreground">
+              Or continue with email
+            </span>
+          </div>
+        </div>
+      </CardContent>
       <form onSubmit={handleRegister}>
         <CardContent className="space-y-4">
           <div className="space-y-2">

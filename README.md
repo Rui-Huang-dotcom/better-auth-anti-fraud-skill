@@ -1,53 +1,68 @@
-# 🛡️ Better Auth Anti-Fraud Skill
+# Better Auth Anti-Fraud Skill 🛡️
 
-## 🚀 The Anti-Multi-Account Layer for Modern Web Apps
+A professional-grade Agent Skill designed to inject a secure, anti-fraud authentication layer into any Next.js/React project. This skill combines the power of **Better Auth** with **Threshold-based Device Fingerprinting** to block multi-account abuse effectively.
 
-The **Better Auth Anti-Fraud Skill** is a professional-grade Agent Skill designed to inject a robust, server-side anti-fraud mechanism into your project. It's built for developers who want to secure their applications against multi-account abuse using a modern, type-safe stack.
+## 🌟 Key Features
 
-### 🎯 Core Innovation: Device Fingerprinting Plugin
+- **Official Better Auth Integration**: Uses the official CLI for 100% accurate database schema generation.
+- **Anti-Fraud Engine**: Threshold-based device fingerprinting (powered by FingerprintJS) to detect and limit multiple accounts per device.
+- **Secure Email Flow**: Mandatory email verification and password reset via **Resend**.
+- **Social Login**: Pre-configured Google OAuth support.
+- **Modern UI**: Sleek, responsive authentication pages built with **Shadcn UI** and **Tailwind CSS**.
+- **Agent-Optimized**: Specifically designed to be deployed by AI agents (like Antigravity) with strict configuration rules.
 
-This Skill implements a custom **Better Auth Server Plugin** that uses **Device Fingerprinting** to block repeat registrations from the same device.
+## 🛠️ Tech Stack
 
-| Component | Role |
+- **Auth**: [Better Auth](https://better-auth.com)
+- **Database**: [Drizzle ORM](https://orm.drizzle.team) + [Supabase (PostgreSQL)](https://supabase.com)
+- **Email**: [Resend](https://resend.com)
+- **Fingerprinting**: [FingerprintJS](https://fingerprintjs.com)
+- **UI**: React + Next.js + Shadcn UI
+
+## 🚀 Quick Start (for Agents)
+
+If you are using an AI agent to deploy this skill, ensure it follows the `SKILL.md` instructions:
+
+1. **Install Dependencies**:
+   ```bash
+   npm install better-auth drizzle-orm resend @fingerprintjs/fingerprintjs lucide-react
+   ```
+2. **Generate Schema**:
+   ```bash
+   npx @better-auth/cli@latest generate --output src/db/auth-schema.ts
+   ```
+3. **Sync Database**:
+   ```bash
+   npx drizzle-kit push
+   ```
+
+## ⚙️ Environment Variables
+
+**CRITICAL**: All values MUST be wrapped in double quotes to prevent parsing errors.
+
+```env
+# Better Auth Core
+BETTER_AUTH_SECRET="your_32_char_secret"
+BETTER_AUTH_URL="http://localhost:3000"
+
+# Database
+DATABASE_URL="postgres://postgres:[PASSWORD]@db.[REF].supabase.co:6543/postgres"
+
+# OAuth & Email
+GOOGLE_CLIENT_ID="your_google_client_id"
+GOOGLE_CLIENT_SECRET="your_google_client_secret"
+RESEND_API_KEY="re_your_resend_key"
+```
+
+## 🔍 Troubleshooting
+
+| Issue | Solution |
 | :--- | :--- |
-| **Skill Name** | `better-auth-anti-fraud` |
-| **Core Logic** | Custom Better Auth Plugin |
-| **Database** | Drizzle ORM (Single Table) |
-| **Anti-Fraud Tech** | `@fingerprintjs/fingerprintjs` |
+| **500 Error (Relation "verification" missing)** | Run `npx @better-auth/cli generate` and then `npx drizzle-kit push`. |
+| **400/500 Error (Google Login)** | Ensure `BETTER_AUTH_URL` is set correctly and matches your Google Cloud Console redirect URI. |
+| **Quotes missing in .env** | Manually wrap values in `""`. The Skill now enforces this for Agents. |
+| **Email not sending** | Verify your domain in Resend or use `onboarding@resend.dev` for testing. |
 
-### 🛠️ How to Install and Use
+## 📄 License
 
-#### 1. Clone the Repository
-Clone this repository to your local machine:
-```bash
-git clone https://github.com/Rui-Huang-dotcom/better-auth-anti-fraud-skill.git
-```
-
-#### 2. Add to Your Project
-Copy the `better-auth-anti-fraud` folder into your project's Agent skill directory:
-*   **Antigravity/Claude**: `.agent/skills/better-auth-anti-fraud/`
-
-#### 3. Activate the Skill
-In your project root, ask your Agent:
-> **Agent Prompt:** "Using the local skill in `.agent/skills/better-auth-anti-fraud`, please integrate the device fingerprinting anti-fraud layer into my project. Use Shadcn UI for the forms."
-
-### 📂 Skill Structure
-
-```
-better-auth-anti-fraud/
-├── SKILL.md                          # Main instructions for the Agent
-├── package.json                      # Skill metadata
-├── resources/                        # Core code snippets
-│   ├── plugin-logic.ts               # Better Auth Plugin code
-│   ├── schema-snippet.ts             # Drizzle schema extension
-│   └── email-templates.tsx           # React email templates
-├── examples/                         # Reference implementations
-│   ├── shadcn-register-form.tsx      # Registration form
-│   ├── forgot-password-form.tsx      # Forgot password form
-│   └── reset-password-form.tsx       # Reset password form
-└── scripts/
-    └── setup.sh                      # Dependency installation script
-```
-
----
-**License**: MIT
+MIT © 2026 Better Auth Anti-Fraud Team

@@ -1,24 +1,56 @@
-// resources/schema-snippet.ts
-// Add these fields to your existing 'user' table in Drizzle schema.
-
-import { pgTable, text, timestamp, boolean } from 'drizzle-orm/pg-core';
+import { pgTable, text, timestamp, boolean } from "drizzle-orm/pg-core";
 
 /**
- * Optimized User Table for Better Auth + Anti-Fraud
+ * Better Auth + Anti-Fraud Schema
  * 
- * Note: fingerprintHash is NOT unique to allow for threshold-based blocking
- * (e.g., allowing 3 accounts per device to prevent false positives).
+ * This snippet includes all required tables for Better Auth (user, session, account, verification)
+ * plus the anti-fraud extensions (fingerprintHash).
  */
-export const user = pgTable('user', {
-  id: text('id').primaryKey(),
-  name: text('name').notNull(),
-  email: text('email').notNull().unique(),
-  emailVerified: boolean('email_verified').notNull().default(false), // For Resend verification
-  image: text('image'),
-  createdAt: timestamp('created_at').notNull(),
-  updatedAt: timestamp('updated_at').notNull(),
-  
-  // Anti-Fraud Field: Stores the unique device fingerprint hash
-  // Removed .unique() to support threshold-based anti-fraud logic
-  fingerprintHash: text('fingerprint_hash'), 
+
+export const user = pgTable("user", {
+	id: text("id").primaryKey(),
+	name: text("name").notNull(),
+	email: text("email").notNull().unique(),
+	emailVerified: boolean("emailVerified").notNull().default(false),
+	image: text("image"),
+	createdAt: timestamp("createdAt").notNull(),
+	updatedAt: timestamp("updatedAt").notNull(),
+	// Anti-fraud extension
+	fingerprintHash: text("fingerprintHash"),
+});
+
+export const session = pgTable("session", {
+	id: text("id").primaryKey(),
+	expiresAt: timestamp("expiresAt").notNull(),
+	token: text("token").notNull().unique(),
+	createdAt: timestamp("createdAt").notNull(),
+	updatedAt: timestamp("updatedAt").notNull(),
+	ipAddress: text("ipAddress"),
+	userAgent: text("userAgent"),
+	userId: text("userId").notNull().references(() => user.id),
+});
+
+export const account = pgTable("account", {
+	id: text("id").primaryKey(),
+	accountId: text("accountId").notNull(),
+	providerId: text("providerId").notNull(),
+	userId: text("userId").notNull().references(() => user.id),
+	accessToken: text("accessToken"),
+	refreshToken: text("refreshToken"),
+	idToken: text("idToken"),
+	accessTokenExpiresAt: timestamp("accessTokenExpiresAt"),
+	refreshTokenExpiresAt: timestamp("refreshTokenExpiresAt"),
+	scope: text("scope"),
+	password: text("password"),
+	createdAt: timestamp("createdAt").notNull(),
+	updatedAt: timestamp("updatedAt").notNull(),
+});
+
+export const verification = pgTable("verification", {
+	id: text("id").primaryKey(),
+	identifier: text("identifier").notNull(),
+	value: text("value").notNull(),
+	expiresAt: timestamp("expiresAt").notNull(),
+	createdAt: timestamp("createdAt"),
+	updatedAt: timestamp("updatedAt"),
 });

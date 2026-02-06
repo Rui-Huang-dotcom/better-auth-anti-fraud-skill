@@ -37,7 +37,7 @@ export function RegisterForm() {
         name,
         callbackURL: '/dashboard',
         // Pass the fingerprint to the server plugin
-        deviceFingerprint: visitorId, 
+        metadata: { fingerprintHash: visitorId }, 
       });
 
       if (error) throw error;
